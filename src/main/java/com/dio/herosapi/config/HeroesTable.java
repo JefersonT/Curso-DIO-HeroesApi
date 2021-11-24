@@ -26,13 +26,16 @@ public class HeroesTable {
         String tableName="Heroes_Table";
 
         try{
+            System.out.println("Criando tabela, aguarde...");
             Table table = dynamoDB.createTable(tableName,
                     Arrays.asList(new KeySchemaElement("id", KeyType.HASH)),
                     Arrays.asList(new AttributeDefinition("id", ScalarAttributeType.S)),
                     new ProvisionedThroughput(5L, 5l));
                 table.waitForActive();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("Successo " + table.getDescription().getTableStatus());
+        } catch (Exception e) {
+            System.err.println("Não foi possível criar a tabela");
+            System.err.println(e.getMessage());
         }
 
     }
